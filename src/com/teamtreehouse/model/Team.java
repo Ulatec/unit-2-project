@@ -7,7 +7,9 @@ import java.util.List;
  */
 public class Team {
     private List<Player> mPlayers;
-    public Team(){
-
+    private String mCoach;
+    public Team(String coach, List<Player> players){
+        mPlayers = players;
+        mCoach = coach;
     }
 }
