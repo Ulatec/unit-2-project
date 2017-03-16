@@ -12,4 +12,7 @@ public class Team {
         mPlayers = players;
         mCoach = coach;
     }
+    public List<Player> getmPlayers(){
+        return mPlayers;
+    }
 }
