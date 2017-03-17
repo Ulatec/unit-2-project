@@ -8,11 +8,16 @@ import java.util.List;
 public class Team {
     private List<Player> mPlayers;
     private String mCoach;
-    public Team(String coach, List<Player> players){
-        mPlayers = players;
+    private String mTeamName;
+    public Team(String coach, String teamName){
+        //mPlayers = players;
         mCoach = coach;
+        mTeamName = teamName;
     }
     public List<Player> getmPlayers(){
         return mPlayers;
+    }
+    public String getTeamName(){
+        return mTeamName;
     }
 }
