@@ -34,6 +34,7 @@ public class Manager {
     private void buildMenu(){
         mMenu.put("add","Add a team.");
         mMenu.put("list", "List Teams");
+        mMenu.put("edit", "Edit Team Roster");
         mMenu.put("quit","Exit the application.");
 
     }
@@ -48,6 +49,9 @@ public class Manager {
                         addTeam();
                         //TODO ADD NEW TEAM
                         break;
+
+                    case "edit team":
+                        editTeam();
                     case "list teams":
                         //String team = promptForTeamIndex();
                         listTeams();
@@ -71,6 +75,19 @@ public class Manager {
 //    private int promptForTeamIndex(){
 //        teams.getTeams();
 //    }
+    private void editTeam() throws IOException{
+
+        int index = 0;
+        if(teams.getTeams().size() == 0){
+            System.out.printf("Sorry, there are no teams to edit. %n");
+        }else {
+            System.out.printf("Available teams to edit: %n");
+            for (String team : teams.getTeams()) {
+                index++;
+                System.out.printf("%d. ) %s - coached by - %s %n", index, team);
+            }
+        }
+    }
     private void addTeam()throws IOException{
         System.out.println("What will the name of the team be?");
         String teamName = mReader.readLine();
