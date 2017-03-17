@@ -23,4 +23,7 @@ public class TeamBook {
     public String getTeamCoach(String teamName){
         return mTeams.get(teamName).getCoachName();
     }
+    public Team getTeamFromName(String teamName){
+        return mTeams.get(teamName);
+    }
 }

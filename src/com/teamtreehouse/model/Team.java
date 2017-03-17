@@ -9,6 +9,7 @@ public class Team {
     private List<Player> mPlayers;
     private String mCoach;
     private String mTeamName;
+    private static final int MAX_PLAYERS = 11;
     public Team(String coach, String teamName){
         //mPlayers = players;
         mCoach = coach;

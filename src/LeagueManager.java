@@ -7,7 +7,7 @@ public class LeagueManager {
   public static void main(String[] args) {
     Player[] players = Players.load();
     System.out.printf("There are currently %d registered players.%n", players.length);
-    Manager newManager = new Manager();
+    Manager newManager = new Manager(players);
     newManager.run();
     // Your code here!
 
