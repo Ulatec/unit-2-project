@@ -20,4 +20,7 @@ public class TeamBook {
         }
         return teamNames;
     }
+    public String getTeamCoach(String teamName){
+        return mTeams.get(teamName).getCoachName();
+    }
 }

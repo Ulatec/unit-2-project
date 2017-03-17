@@ -14,10 +14,16 @@ public class Team {
         mCoach = coach;
         mTeamName = teamName;
     }
+    public void addPlayer(Player player){
+        mPlayers.add(player);
+    }
     public List<Player> getmPlayers(){
         return mPlayers;
     }
     public String getTeamName(){
         return mTeamName;
+    }
+    public String getCoachName(){
+        return mCoach;
     }
 }
