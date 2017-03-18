@@ -172,7 +172,7 @@ public class Manager {
         System.out.println("availablePlayers: " + availablePlayers.size());
         for(Player player : availablePlayers){
             availablePlayersIndex++;
-            System.out.printf("%d.) %s - %s - %d - %s%n", availablePlayersIndex, player.getFirstName(), player.getLastName(), player.getHeightInInches(), player.isPreviousExperience());
+            System.out.printf("%d.) %s %s height:%d  has prior experience: %s%n", availablePlayersIndex, player.getFirstName(), player.getLastName(), player.getHeightInInches(), player.isPreviousExperience());
         }
     }
 
@@ -183,7 +183,14 @@ public class Manager {
         Player selectedPlayer = availablePlayers.get(choice - 1 );
         return selectedPlayer;
     }
-    private void assignPlayer(){
+    private void assignPlayer() throws IOException{
+        Player toBeAssigned = selectFromAvailablePlayers();
+        Team toBeAddedTo = chooseTeam();
+        toBeAddedTo.addPlayer(toBeAssigned);
+        availablePlayers.remove(toBeAssigned);
+        System.out.printf("%s %s has been assigned to %s. %n", toBeAssigned.getFirstName(), toBeAssigned.getLastName(), toBeAddedTo.getTeamName() );
+    }
+    private void printRoster(){
         
     }
 }
