@@ -1,7 +1,6 @@
 package com.teamtreehouse;
 
 import com.teamtreehouse.model.Player;
-import com.teamtreehouse.model.Players;
 import com.teamtreehouse.model.Team;
 import com.teamtreehouse.model.TeamBook;
 
@@ -17,28 +16,31 @@ public class Manager {
     private BufferedReader mReader;
     private HashMap<String, String> mMenu;
     private TeamBook teams;
-    private Set<Player> availablePlayers;
-    public Manager(Player[] players){
+    private List<Player> availablePlayers;;
+    public Manager(Player[] players) {
 
         mReader = new BufferedReader(new InputStreamReader(System.in));
-        mMenu = new HashMap<String,String>();
+        mMenu = new HashMap<String, String>();
         teams = new TeamBook();
         //USE THIS BLOCK FOR TESTING//
 
 
-        teams.addTeam(new Team("mark", "the fgts" ));
+        teams.addTeam(new Team("mark", "the fgts"));
         teams.addTeam(new Team("bitch", "the ballsacks"));
 
         // END BLOCK //
         int i = 0;
         System.out.println(players.length);
-        availablePlayers = new TreeSet<>();
-        for(Player player : players){
 
+        //availablePlayers.addAll(players);
+        availablePlayers = new ArrayList<Player>();
+
+        for (Player player : players) {
             System.out.printf(i + " " + player.getFirstName());
             availablePlayers.add(player);
             i++;
         }
+        Collections.sort(availablePlayers);
 
         buildMenu();
 
@@ -58,6 +60,7 @@ public class Manager {
         mMenu.put("list", "List Teams");
         mMenu.put("add player", "Add a player to a Team Roster");
         mMenu.put("remove player", "Remove a player from a team roster.");
+        mMenu.put("assign player", "Assign player to team.");
         mMenu.put("list players", "List available players");
         mMenu.put("quit","Exit the application.");
 
@@ -82,6 +85,9 @@ public class Manager {
                         teamToEdit = chooseTeam();
                         removePlayersPrompt(teamToEdit);
                         break;
+                    case "assign player":
+                        assignPlayer();
+                        break;
                     case "list teams":
                         //String team = promptForTeamIndex();
                         listTeams();
@@ -105,9 +111,6 @@ public class Manager {
         }
     }
 
-//    private int promptForTeamIndex(){
-//        teams.getTeams();
-//    }
     private Team chooseTeam() throws IOException{
         List<String> teamList = new ArrayList<String>();
         int index = 0;
@@ -132,13 +135,28 @@ public class Manager {
         int choice = Integer.parseInt(selection.trim());
         return choice - 1;
     }
-    private void removePlayersPrompt(Team team){
+    private void removePlayersPrompt(Team team) throws IOException{
+        int teamPlayerIndex = 0;
+        for(Player player : team.getmPlayers()){
+            teamPlayerIndex++;
+            System.out.printf("%d.) %s - %s - %d - %s%n", teamPlayerIndex, player.getFirstName(), player.getLastName(), player.getHeightInInches(), player.isPreviousExperience());
+        }
+        String selection = mReader.readLine();
+        int choice = Integer.parseInt(selection.trim());
+        Player selectedPlayer = team.getmPlayers().get(choice - 1 );
+        team.removePlayer(selectedPlayer);
+        availablePlayers.add(selectedPlayer);
+        Collections.sort(availablePlayers);
         System.out.printf("are you sure that you wish to remove dickface from %s ? %n", team.getTeamName());
 
     }
-    private void addPlayersPrompt(Team team){
-        listAvailablePlayers();
-        System.out.printf("are you sure that you wish to add dickface from %s ? %n", team.getTeamName());
+    private void addPlayersPrompt(Team team) throws IOException{
+        Player selectedPlayer = selectFromAvailablePlayers();
+
+        team.addPlayer(selectedPlayer);
+        availablePlayers.remove(selectedPlayer);
+//        Player tempPlayer = availablePlayers.
+        System.out.printf("You have added %s %sto the team %s %n", selectedPlayer.getFirstName(), selectedPlayer.getLastName(), team.getTeamName());
     }
     private void addTeam()throws IOException{
         System.out.println("What will the name of the team be?");
@@ -149,11 +167,23 @@ public class Manager {
         teams.addTeam(newTeam);
         System.out.printf("New team %s coached by %s has been created. %n", teamName, coachName);
     }
-
     private void listAvailablePlayers(){
+        int availablePlayersIndex = 0;
         System.out.println("availablePlayers: " + availablePlayers.size());
         for(Player player : availablePlayers){
-            System.out.printf("%s - %s - %d - %s%n", player.getFirstName(), player.getLastName(), player.getHeightInInches(), player.isPreviousExperience());
+            availablePlayersIndex++;
+            System.out.printf("%d.) %s - %s - %d - %s%n", availablePlayersIndex, player.getFirstName(), player.getLastName(), player.getHeightInInches(), player.isPreviousExperience());
         }
+    }
+
+    private Player selectFromAvailablePlayers()throws IOException{
+        listAvailablePlayers();
+        String selection = mReader.readLine();
+        int choice = Integer.parseInt(selection.trim());
+        Player selectedPlayer = availablePlayers.get(choice - 1 );
+        return selectedPlayer;
+    }
+    private void assignPlayer(){
+        
     }
 }
