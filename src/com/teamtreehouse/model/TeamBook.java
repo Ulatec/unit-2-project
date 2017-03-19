@@ -8,7 +8,7 @@ import java.util.*;
 public class TeamBook {
     private Map<String, Team> mTeams;
     public TeamBook(){
-        mTeams = new HashMap<String, Team>();
+        mTeams = new TreeMap<String, Team>();
     }
     public void addTeam(Team team){
         mTeams.put(team.getTeamName(), team);

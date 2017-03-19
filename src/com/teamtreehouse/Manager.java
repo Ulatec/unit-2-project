@@ -22,23 +22,20 @@ public class Manager {
         mReader = new BufferedReader(new InputStreamReader(System.in));
         mMenu = new HashMap<String, String>();
         teams = new TeamBook();
+
+
         //USE THIS BLOCK FOR TESTING//
-
-
-        teams.addTeam(new Team("mark", "the fgts"));
-        teams.addTeam(new Team("bitch", "the ballsacks"));
-
+        teams.addTeam(new Team("Coach A", "Team A"));
+        teams.addTeam(new Team("Coach B", "Team B"));
+        teams.addTeam(new Team("Coach C", "Team C"));
+        teams.addTeam(new Team("Coach D", "Team D"));
         // END BLOCK //
-        int i = 0;
-        System.out.println(players.length);
 
-        //availablePlayers.addAll(players);
+
         availablePlayers = new ArrayList<Player>();
-
         for (Player player : players) {
-            System.out.printf(i + " " + player.getFirstName());
+            //System.out.printf(i + " " + player.getFirstName());
             availablePlayers.add(player);
-            i++;
         }
         Collections.sort(availablePlayers);
 
@@ -56,12 +53,12 @@ public class Manager {
         return choice.trim().toLowerCase();
     }
     private void buildMenu(){
-        mMenu.put("add","Add a team.");
-        mMenu.put("list", "List Teams");
+        mMenu.put("add team","Add a team.");
+        mMenu.put("list teams", "List Teams");
         mMenu.put("add player", "Add a player to a Team Roster");
         mMenu.put("remove player", "Remove a player from a team roster.");
         mMenu.put("assign player", "Assign player to team.");
-        mMenu.put("list players", "List available players");
+        mMenu.put("list all players", "List available players");
         mMenu.put("quit","Exit the application.");
 
     }
@@ -76,7 +73,9 @@ public class Manager {
                         addTeam();
                         //TODO ADD NEW TEAM
                         break;
-
+                    case "team report":
+                        teamReport();
+                        break;
                     case "add player":
                         Team teamToEdit = chooseTeam();
                         addPlayersPrompt(teamToEdit);
@@ -89,7 +88,6 @@ public class Manager {
                         assignPlayer();
                         break;
                     case "list teams":
-                        //String team = promptForTeamIndex();
                         listTeams();
                         break;
                     case "list players":
@@ -98,8 +96,13 @@ public class Manager {
                     case "quit":
                         break;
                 }
-            }catch(IOException ioe){
-                ioe.printStackTrace();
+            }catch(IOException | NumberFormatException exception){
+                if(exception instanceof NumberFormatException){
+                    System.out.printf("Please use only numerical digits when making selections. %n");
+                }else {
+                    System.out.println("Error parsing input! Let's try again! %n");
+                    exception.printStackTrace();
+                }
             }
 
         }while(!choice.equals("quit"));
@@ -107,7 +110,7 @@ public class Manager {
     //USED FOR DEBUGGING
     public void listTeams(){
         for(String team : teams.getTeams()){
-            System.out.printf("%s - coached by - %s %n", team);
+            System.out.printf("%s - coached by %n", team);
         }
     }
 
@@ -147,7 +150,7 @@ public class Manager {
         team.removePlayer(selectedPlayer);
         availablePlayers.add(selectedPlayer);
         Collections.sort(availablePlayers);
-        System.out.printf("are you sure that you wish to remove dickface from %s ? %n", team.getTeamName());
+        System.out.printf("are you sure that you wish to remove %s %s from %s ? %n", selectedPlayer.getFirstName(), selectedPlayer.getLastName(), team.getTeamName());
 
     }
     private void addPlayersPrompt(Team team) throws IOException{
@@ -191,6 +194,54 @@ public class Manager {
         System.out.printf("%s %s has been assigned to %s. %n", toBeAssigned.getFirstName(), toBeAssigned.getLastName(), toBeAddedTo.getTeamName() );
     }
     private void printRoster(){
-        
+
+    }
+    private void teamReport()throws IOException{
+        Team teamToReport = chooseTeam();
+        List<Player> teamRoster = new ArrayList<>();
+        for(Player player : teamToReport.getmPlayers()){
+            teamRoster.add(player);
+        }
+        teamRoster.sort(new Comparator<Player>(){
+            @Override
+            public int compare(Player player1, Player player2){
+                if (player1.equals(player2)) {
+                    return 0;
+                }
+                if(player1.getHeightInInches() == (player2.getHeightInInches())){
+                    return 0;
+                }
+                if(player1.getHeightInInches() > player2.getHeightInInches()){
+                    return 1;
+                }
+                else {
+                    return -1;
+                }
+            }
+        });
+        List<Player> category1 = new ArrayList<>();
+        List<Player> category2 = new ArrayList<>();
+        List<Player> category3 = new ArrayList<>();
+        for(Player player : teamRoster){
+            if(player.getHeightInInches() <= 40){
+                category1.add(player);
+                //teamRoster.remove(player);
+            }else if(player.getHeightInInches() >= 41 && player.getHeightInInches() <= 46){
+                    category2.add(player);
+                }
+                else{
+                category3.add(player);
+            }
+        }
+        System.out.printf("There are %d players in category1, %d in category2, and %d in category3 %n", category1.size(), category2.size(), category3.size());
+
+
+        for(Player player : teamRoster){
+            System.out.printf("%s %s height:%d  has prior experience: %s%n", player.getFirstName(), player.getLastName(), player.getHeightInInches(), player.isPreviousExperience());
+        }
+
+
+
+
     }
 }
