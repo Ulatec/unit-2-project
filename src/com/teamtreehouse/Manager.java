@@ -205,9 +205,7 @@ public class Manager {
             teamRoster.add(player);
         }
 
-
-
-        Set<Player> heightSortedPlayers = new TreeSet<Player>(new Comparator<Player>() {
+        Comparator<Player> heightComparator = new Comparator<Player>(){
             @Override
             public int compare(Player player1, Player player2) {
                 if (player1.equals(player2)) {
@@ -222,7 +220,11 @@ public class Manager {
                     return -1;
                 }
             }
-        });
+        };
+
+        Set<Player> heightSortedPlayers = new TreeSet<Player>(heightComparator);
+
+
         heightSortedPlayers.addAll(teamRoster);
 //
 //                teamRoster.sort(new Comparator<Player>() {
@@ -248,26 +250,32 @@ public class Manager {
                 upperBound = player;
             }
         }
+
         List<Player> smallList = teamRoster.subList(0, teamRoster.indexOf(upperBound));
 
 
 
+        Map<String, Set<Player>> allTeamPlayers = new HashMap<String, Set<Player>>();
 
-//        List<Player> category1 = new ArrayList<>();
-//        List<Player> category2 = new ArrayList<>();
-//        List<Player> category3 = new ArrayList<>();
-//        for(Player player : teamRoster){
-//            if(player.getHeightInInches() <= 40){
-//                category1.add(player);
-//                //teamRoster.remove(player);
-//            }else if(player.getHeightInInches() >= 41 && player.getHeightInInches() <= 46){
-//                    category2.add(player);
-//                }
-//                else{
-//                category3.add(player);
-//            }
-//        }
-        //System.out.printf("There are %d players in category1, %d in category2, and %d in category3 %n", category1.size(), category2.size(), category3.size());
+        List<Player> category1 = new ArrayList<>();
+        List<Player> category2 = new ArrayList<>();
+        List<Player> category3 = new ArrayList<>();
+        Set<Player> shortCategory = new TreeSet<Player>(heightComparator);
+        Set<Player> mediumCategory = new TreeSet<Player>(heightComparator);
+        Set<Player> tallCategory = new TreeSet<Player>(heightComparator);
+        for(Player player : teamRoster){
+            if(player.getHeightInInches() <= 40){
+                shortCategory.add(player);
+                //teamRoster.remove(player);
+            }else if(player.getHeightInInches() >= 41 && player.getHeightInInches() <= 46){
+                    mediumCategory.add(player);
+                }
+                else{
+                tallCategory.add(player);
+            }
+            allTeamPlayers.add()
+        }
+        System.out.printf("There are %d players in category1, %d in category2, and %d in category3 %n", category1.size(), category2.size(), category3.size());
 
 
         for(Player player : heightSortedPlayers){
