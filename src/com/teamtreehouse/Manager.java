@@ -273,14 +273,22 @@ public class Manager {
                 else{
                 tallCategory.add(player);
             }
-            allTeamPlayers.add()
+           
         }
-        System.out.printf("There are %d players in category1, %d in category2, and %d in category3 %n", category1.size(), category2.size(), category3.size());
+		allTeamPlayers.put("40 and below", shortCategory);
+		allTeamPlayers.put("41-46", mediumCategory);
+		allTeamPlayers.put("47 and above", tallCategory);
+		
+		for(Map.Entry<String,List<Player>> entry : allTeamPlayers){
+			System.out.printf("%s has %d players, they are: ", entry.getKey(), entry.getValue().size()); 
+		}
+		
+        //System.out.printf("There are %d players in category1, %d in category2, and %d in category3 %n", category1.size(), category2.size(), category3.size());
 
 
-        for(Player player : heightSortedPlayers){
-            System.out.printf("%s %s height:%d  has prior experience: %s%n", player.getFirstName(), player.getLastName(), player.getHeightInInches(), player.isPreviousExperience());
-        }
+        //for(Player player : heightSortedPlayers){
+        //    System.out.printf("%s %s height:%d  has prior experience: %s%n", player.getFirstName(), player.getLastName(), player.getHeightInInches(), player.isPreviousExperience());
+        //}
 
 
 
