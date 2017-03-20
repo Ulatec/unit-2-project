@@ -1,7 +1,9 @@
 package com.teamtreehouse.model;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by mark on 3/16/2017.

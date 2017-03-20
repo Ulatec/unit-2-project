@@ -198,50 +198,93 @@ public class Manager {
     }
     private void teamReport()throws IOException{
         Team teamToReport = chooseTeam();
-        List<Player> teamRoster = new ArrayList<>();
+        //List<Player> teamRoster = new ArrayList<>();
+        Set<Player> teamRoster = new TreeSet<>();
+
         for(Player player : teamToReport.getmPlayers()){
             teamRoster.add(player);
         }
-        teamRoster.sort(new Comparator<Player>(){
+
+
+
+        Set<Player> heightSortedPlayers = new TreeSet<Player>(new Comparator<Player>() {
             @Override
-            public int compare(Player player1, Player player2){
+            public int compare(Player player1, Player player2) {
                 if (player1.equals(player2)) {
                     return 0;
                 }
-                if(player1.getHeightInInches() == (player2.getHeightInInches())){
+                if (player1.getHeightInInches() == (player2.getHeightInInches())) {
                     return 0;
                 }
-                if(player1.getHeightInInches() > player2.getHeightInInches()){
+                if (player1.getHeightInInches() > player2.getHeightInInches()) {
                     return 1;
-                }
-                else {
+                } else {
                     return -1;
                 }
             }
         });
-        List<Player> category1 = new ArrayList<>();
-        List<Player> category2 = new ArrayList<>();
-        List<Player> category3 = new ArrayList<>();
-        for(Player player : teamRoster){
+        heightSortedPlayers.addAll(teamRoster);
+//
+//                teamRoster.sort(new Comparator<Player>() {
+//                    @Override
+//                    public int compare(Player player1, Player player2) {
+//                        if (player1.equals(player2)) {
+//                            return 0;
+//                        }
+//                        if (player1.getHeightInInches() == (player2.getHeightInInches())) {
+//                            return 0;
+//                        }
+//                        if (player1.getHeightInInches() > player2.getHeightInInches()) {
+//                            return 1;
+//                        } else {
+//                            return -1;
+//                        }
+//                    }
+//                });
+
+        Player upperBound;
+        for(Player player : heightSortedPlayers){
             if(player.getHeightInInches() <= 40){
-                category1.add(player);
-                //teamRoster.remove(player);
-            }else if(player.getHeightInInches() >= 41 && player.getHeightInInches() <= 46){
-                    category2.add(player);
-                }
-                else{
-                category3.add(player);
+                upperBound = player;
             }
         }
-        System.out.printf("There are %d players in category1, %d in category2, and %d in category3 %n", category1.size(), category2.size(), category3.size());
+        List<Player> smallList = teamRoster.subList(0, teamRoster.indexOf(upperBound));
 
 
-        for(Player player : teamRoster){
+
+
+//        List<Player> category1 = new ArrayList<>();
+//        List<Player> category2 = new ArrayList<>();
+//        List<Player> category3 = new ArrayList<>();
+//        for(Player player : teamRoster){
+//            if(player.getHeightInInches() <= 40){
+//                category1.add(player);
+//                //teamRoster.remove(player);
+//            }else if(player.getHeightInInches() >= 41 && player.getHeightInInches() <= 46){
+//                    category2.add(player);
+//                }
+//                else{
+//                category3.add(player);
+//            }
+//        }
+        //System.out.printf("There are %d players in category1, %d in category2, and %d in category3 %n", category1.size(), category2.size(), category3.size());
+
+
+        for(Player player : heightSortedPlayers){
             System.out.printf("%s %s height:%d  has prior experience: %s%n", player.getFirstName(), player.getLastName(), player.getHeightInInches(), player.isPreviousExperience());
         }
 
 
 
 
+    }
+    private Player findBound(TreeSet<Player> set){
+        Player upperBound;
+        for(Player player : set){
+            if(player.getHeightInInches() <= 40){
+                upperBound = player;
+            }
+        }
+        return upperBound;
     }
 }
