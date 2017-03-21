@@ -123,6 +123,7 @@ public class Manager {
                 }
 
             } while (!choice.equals("quit")) ;
+        System.out.print("Goodbye!");
         }
     public void listTeams(){
         for(Team team : teams){
