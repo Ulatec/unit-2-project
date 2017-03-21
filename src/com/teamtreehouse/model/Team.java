@@ -1,18 +1,14 @@
 package com.teamtreehouse.model;
 
-import java.util.ArrayList;
-import java.util.TreeSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by mark on 3/16/2017.
  */
-public class Team {
+public class Team implements Comparable<Team>{
     private List<Player> mPlayers;
     private String mCoach;
     private String mTeamName;
-    private static final int MAX_PLAYERS = 11;
     public Team(String coach, String teamName){
         //mPlayers = players;
         mCoach = coach;
@@ -33,5 +29,16 @@ public class Team {
     }
     public String getCoachName(){
         return mCoach;
+    }
+    @Override
+    public int compareTo(Team other) {
+        if (equals(other)) {
+            return 0;
+        }
+        int teamNameCmp = mTeamName.compareTo(other.mTeamName);
+        if (teamNameCmp == 0) {
+            return mCoach.compareTo(other.mCoach);
+        }
+        return teamNameCmp;
     }
 }

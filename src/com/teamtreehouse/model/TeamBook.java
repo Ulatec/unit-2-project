@@ -26,4 +26,7 @@ public class TeamBook {
     public Team getTeamFromName(String teamName){
         return mTeams.get(teamName);
     }
+    public int getTeamCount(){
+        return mTeams.size();
+    }
 }
