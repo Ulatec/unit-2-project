@@ -6,7 +6,16 @@ import com.teamtreehouse.model.Team;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.Collections;
+import java.util.Map;
+import java.util.TreeMap;
+
 
 public class Manager {
     private BufferedReader mReader;
