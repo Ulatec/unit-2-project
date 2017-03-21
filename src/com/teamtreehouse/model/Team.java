@@ -2,15 +2,11 @@ package com.teamtreehouse.model;
 
 import java.util.*;
 
-/**
- * Created by mark on 3/16/2017.
- */
 public class Team implements Comparable<Team>{
     private List<Player> mPlayers;
     private String mCoach;
     private String mTeamName;
     public Team(String coach, String teamName){
-        //mPlayers = players;
         mCoach = coach;
         mTeamName = teamName;
         mPlayers = new ArrayList<Player>();
@@ -21,7 +17,7 @@ public class Team implements Comparable<Team>{
     public void addPlayer(Player player){
         mPlayers.add(player);
     }
-    public List<Player> getmPlayers(){
+    public List<Player> getPlayers(){
         return mPlayers;
     }
     public String getTeamName(){
@@ -35,10 +31,15 @@ public class Team implements Comparable<Team>{
         if (equals(other)) {
             return 0;
         }
-        int teamNameCmp = mTeamName.compareTo(other.mTeamName);
+        //Use toLowerCase to ensure that Set order does not become case sensitive.
+        int teamNameCmp = mTeamName.toLowerCase().compareTo(other.mTeamName.toLowerCase());
         if (teamNameCmp == 0) {
-            return mCoach.compareTo(other.mCoach);
+            return mCoach.compareTo(other.mCoach.toLowerCase());
         }
         return teamNameCmp;
+    }
+    @Override
+    public String toString(){
+        return mTeamName;
     }
 }

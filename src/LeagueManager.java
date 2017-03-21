@@ -9,7 +9,6 @@ public class LeagueManager {
     System.out.printf("There are currently %d registered players.%n", players.length);
     Manager newManager = new Manager(players);
     newManager.run();
-    // Your code here!
 
   }
 
