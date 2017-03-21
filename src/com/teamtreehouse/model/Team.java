@@ -1,6 +1,7 @@
 package com.teamtreehouse.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Team implements Comparable<Team>{
     private List<Player> mPlayers;
